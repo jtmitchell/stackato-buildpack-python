@@ -52,6 +52,12 @@ export PATH=$APYBIN:$PATH
 export PYTHONUSERBASE=/app/.python
 export PYTHONUNBUFFERED=True
 
+# install devpi
+if [ -n "$DEVPI_URL" ]; then
+	$APYBIN/pip install --user devpi-client | cleanup_pip | indent
+	$PYTHONUSERBASE/bin/devpi use --always-set-cfg yes $DEVPI_URL
+fi
+
 if [[ -f requirements.pypm ]]; then
 	puts-step "Installing requirements via PyPM"
 	$APYBIN/pypm install -r requirements.pypm | indent
